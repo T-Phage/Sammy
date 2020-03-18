@@ -22,9 +22,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = ')l^fec=y#g+$vp%n$e)=#6na=oa4fg_0z6^lpspm^^&0y9-if#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['collab-live-cli.herokuapp.com']
 
 # Application definition
 
