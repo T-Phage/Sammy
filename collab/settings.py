@@ -79,22 +79,22 @@ WSGI_APPLICATION = 'collab.wsgi.application'
 
 DATABASES = {
 
+     'default': {
+         'ENGINE': 'django.db.backends.sqlite3',
+         'NAME': 'mydb',
+         },
     # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': 'mydb',
-    #     },
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-            'read_default_file': '/path/to/my.cnf',
-        },
-        'NAME': 'PCS_DB',
-        'PASSWORD': '@1$anacondA',
-        'HOST': 'localhost',
-        'PORT': '3306',
-        'USER': 'root',
-        'default-character-set': 'utf8',
-    }
+    #    'ENGINE': 'django.db.backends.mysql',
+    #    'OPTIONS': {
+    #        'read_default_file': '/path/to/my.cnf',
+    #    },
+   #     'NAME': 'PCS_DB',
+   #     'PASSWORD': '@1$anacondA',
+   #     'HOST': 'localhost',
+    #    'PORT': '3306',
+     #   'USER': 'root',
+     #   'default-character-set': 'utf8',
+   # }
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
     #     'NAME': 'pcs',
