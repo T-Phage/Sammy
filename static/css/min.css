@@ -1,0 +1,97 @@
+/* Side nav class */
+.sidenav{
+  background-color:transparent;
+  overflow-x: hidden;
+  padding-top: 20px;
+  padding-top: 20px;
+  margin-top:5%;
+  height:100%;
+  width:25%;
+  position:fixed;
+  z-index:-1;
+  top:0;
+  left:0
+}
+  .sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 19px;
+    color: #818181;
+    display: block;
+    border-width: 2px;    
+  }
+  
+  .main {
+    margin-left: 20%; /* Same as the width of the sidenav */
+    font-size: 17px; /* Increased text to enable scrolling */
+    padding: 0px 10px;
+    margin-top: 5%;
+    position:relative;
+  } 
+  
+  .main a{ /* Link color for the main class */
+    color: black;
+  }
+  
+  .main a:hover{ /* Link color on mouse hover */
+    text-decoration: none;
+  }
+
+  nav.container{ /* Position of Nav tabs within the main class */
+    margin-left:63%;
+  }
+
+.fa {
+  color: blue;
+  font-weight: normal;
+}
+
+.fas {
+  color: blue;
+}
+
+r {
+  color: black;
+  font-weight: normal;
+}
+
+  
+ /* *************************
+     Create site dialog style
+  **************************** */
+ 
+      /* Full-width input fields */
+      input[type=text], input[type=textarea] {
+        width: 100%;
+        padding: 10px 18px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+      }
+      /* styling text area */
+      #id_description{
+        height:150px;
+        width:100%;
+      }
+      
+      /* Set a style for all buttons */
+      button {
+        background-color: blue;
+        color: white;
+        padding: 10px 18px;
+        border: none;
+        cursor: pointer;
+        border-radius: 15%;
+      }
+      
+      button:hover {
+        opacity: 0.8;
+      }
+      
+      /* Extra styles for the cancel button */
+      .cancelbtn {
+        width: auto;
+        padding: 10px 18px;
+        background-color: #f44336;
+      }

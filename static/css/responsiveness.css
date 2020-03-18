@@ -1,0 +1,50 @@
+/* ***********************************
+    Style at media screen size 656px
+  *************************************/
+  @media screen and (max-width: 656px) {
+    .sidenav {padding-top: 15px;
+            visibility: hidden;}
+    .sidenav a {font-size: 15px;}
+    .main {margin-left: 1%;}
+    ul {margin-left: 0%;}
+    .main{margin-top: 2%;}
+    }
+
+
+
+/* *********************************
+  Screen Style at size 656px and below
+**************************************/
+ @media screen and (max-width: 656px) {
+    nav.container {
+      margin-left: 25%;
+    }
+    .main{margin-top: 3%;}
+  }
+  /* ***********************************
+    Screen Style at size 470px and below 
+  ***************************************/
+   @media screen and (max-width: 470px){
+    .main{
+      margin-top: 23%;
+      margin-right:0%;
+    }
+    nav.container{
+      margin-left: 0%;
+      font-size: 10px;
+    }
+   }
+
+   /*******************************
+   Screen style at size 1025px
+   **********************************/
+   @media screen and (max-width:1025px){
+   .nav.container{
+     margin-left: 32%;
+   }
+   .links {
+    width: 70%;
+    height: 60%;
+  }
+ }
+

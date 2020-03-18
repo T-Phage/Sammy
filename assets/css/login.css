@@ -1,0 +1,35 @@
+/* Login style */
+body {
+    /* background-image: url('images/index1.jpeg'); */ 
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.form {
+    border-style: hidden;
+    width: 350px;
+    height: 100%;
+    margin-left: 38%;
+    margin-top: 4%;
+    padding: 4% 4% 4% 4%;
+    background-color:lightseagreen;
+}
+h1, p{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+}
+
+@media screen (max-width: 475.98px) {
+    .form{
+        margin-left: 0%;
+        width: auto%;
+        height: auto%;
+    }
+}
+
+@media screen (min-width: 576px){
+    .form{
+        width: 95%;
+        height: 100%;
+    }
+}

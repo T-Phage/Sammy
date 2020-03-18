@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+{% load static %}
+{% url 'sites' as sites %}
+<html lang="en">
+<head>
+<!-- Load an icon library to show a hamburger menu (bars) on small screens -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"><!--upload modal-->
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/min.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/responsiveness.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/uploadmodal.css' %}">
+<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Repository</title>
+
+  <style>
+    #id_description{
+        height:150px;
+        width:100%;
+    }
+
+    .active{
+      background-color: #fff;
+    }
+    
+  </style>
+
+<body>
+  <!-- Top navbar -->
+  {% include 'navbar.html' %}
+
+  <!-- Create site form -->
+  {% include 'sitemodal.html' %}
+
+  <!-- uploadmodal -->
+  {% include 'uploadmodal.html' %}
+
+  <!-- create folder modal -->
+  {% include 'create_folder.html' %}
+
+<!--body tab-->
+    <div class="container" style="margin-left: 15%">
+        <br />
+        <br />
+        <br />
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist" style="margin-left:5%">
+          <li class="nav-item">
+              <a class="nav-link fas fa-folder" data-toggle="modal" data-target="#folderModal" href="#"><r>Create folder</r></a>
+          </li>
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><r>Upload file</r></a>
+              <div class="dropdown-menu">
+                    <a class="dropdown-item fas fa-folder" data-toggle="modal" data-target="#myModal" href="#"><r>Directory</r></a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item fas fa-file-text blue" href="https://docs.google.com/document/u/0/"><r>google docs</r></a>
+                    <a class="dropdown-item fas fa-file-excel-o blue" href="https://docs.google.com/spreadsheets/u/0/"><r>google spreadsheet</r></a>
+                    <a class="dropdown-item fas fa-file-powerpoint-o blue" href="#"><r>google presentation</r></a>
+              </div>
+          </li>
+        </ul>
+    </div>
+
+        <!-- Side navbar -->
+     <div class="sidenav">
+        <h4 style="font-size:18px"></h4>
+      <div class="card" style="width:80%;">
+          <div class="card-header">
+              <a href="#" class="fa fa-folder" style="padding:0px 0px 0px 0px; font-size:20px; text-decoration:none;">Repository</a>
+          </div>
+          <div class="card-body" style="padding-top:0%;">
+              {% for folder in folders %}
+                <a href="" style="font-size:16px;">{{ folder.folder_name }}</a>
+              {% endfor %}
+            <a href="">IT Department</a>
+            <a href="">Faculty of Business Edu</a>
+            <a href="">Faculty of Education</a>
+            <a href="">Air pollution</a>
+          </div>
+      </div>
+    </div>
+
+
+    <!-- The main repository -->
+    <div class="main col-8">
+        <div class="container-fluid">
+            {% for folder in folders %}
+            <div class="row border" style="width:100%; height:150px;">
+                <div class="row col-10">
+                    <div class="col-sm-2" height="100%" style="padding-top:5%;">
+                        <img src="{% static 'images/folder.jpeg' %}" width="50px" height="50px" style="padding-top:4%;" alt="">
+                    </div>
+                    <div class="col-8">
+                        <h5 style="padding-top:10%; margin-left:0px; width:100%;">{{ folder.folder_name }}</h5>
+                    </div>
+                </div>
+            </div>
+             <br />
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
+</body>
+</html>

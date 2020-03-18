@@ -1,0 +1,50 @@
+/*********************************
+uploadmodal styling
+*********************************/
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1040;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    }
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto 5% auto;
+        border: 1px solid #888;
+        width: 600px;
+        height: 100%;
+    }
+    .modal-body {
+        position: relative;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        padding: 1rem;
+        width: 100%;
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+    label {
+      cursor: pointer;
+    }
+
+    #id_filepath {
+      opacity: 0;
+      position: absolute;
+      z-index: -1;
+    }
+
+ /***************************************
+ Upload modal responsiveness
+ ***************************************/
+ @media screen and (max-width: 470px){
+    .modal-content{
+        width:100%;
+    }
+    .modal-dialog{
+        width:100%;
+    }
+
+ }

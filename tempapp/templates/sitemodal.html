@@ -1,0 +1,93 @@
+  <!-- Modal -->
+  {% block style %}
+  <style>
+  .sidenav{z-index:-1;}
+      .modal{
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        padding-top: 60px;
+      }
+
+      .sitemodal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .sitemodal .modal-content {
+        margin: auto auto 5% auto; /* 5% from the top, 5% from the bottom and centered */
+        border: 1px solid #888;
+        width: 350px; /* Could be more or less, depending on screen size */
+      }
+
+    /* Add Zoom Animation */
+      .animate {
+        -webkit-animation: animatezoom 0.6s;
+        animation: animatezoom 0.6s
+      }
+
+      @-webkit-keyframes animatezoom {
+        from {-webkit-transform: scale(0)}
+        to {-webkit-transform: scale(1)}
+      }
+
+      @keyframes animatezoom {
+        from {transform: scale(0)}
+        to {transform: scale(1)}
+      }
+      #id_site_visibility {
+        list-style-type:none;
+      }
+  </style>
+  {% endblock %}
+  <div class="modal sitemodal" id="sitemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true" style="width:100%;">
+    <div class="modal-dialog" role="document" style="width:100%;">
+        <form class="modal-content animate" action="" method="post">
+            {% csrf_token %}
+          <div class="container" style="padding-top: 5%; padding-left:10%; padding-right: 8%; background-color:white;">
+<!--                {{ siteform.as_p }}-->
+              <label for="id_site_name"><b>Site Name/Title</b></label>
+                {{ siteform.site_name }}
+              <label for="id_site_id"><b>Site_id</b></label>
+                {{ siteform.site_id }}
+              <label for="id_description"><b>Description</b></label>
+                {{ siteform.description }}
+              <label for="id_site_visibility"><b>Visibility</b></label>
+                {{ siteform.site_visibility }}
+
+              <script type="text/javascript">
+<!--                  var el = document.getElementsByTagName ('label');-->
+<!--                for(var x=0; x<el.length; x++)-->
+<!--                {-->
+<!--                    if (el[x].innerHTML == "Site name:")-->
+<!--                        el[x].innerHTML = "<b>Site Name/Title</b>"-->
+<!--                    if (el[x].innerHTML == "Site id:")-->
+<!--                        el[x].innerHTML = "<b>Site_id</b>"-->
+<!--                    if (el[x].innerHTML == "Description:")-->
+<!--                        el[x].innerHTML = "<b>Description</b>"-->
+<!--                    if (el[x].innerHTML == "Site visibility:")-->
+<!--                        el[x].innerHTML = "<b>Visibility</b>"-->
+<!--    -->
+<!--                }-->
+                //Query all input fields
+<!--                var form_fields = document.getElementsByTagName('input')-->
+<!--                form_fields[1].placeholder="name of site...";-->
+<!--                form_fields[2].placeholder="site_id...";-->
+<!--                form_fields[3].placeholder="description...";-->
+              </script>
+            <br />
+            <button type="submit">Create site</button>
+            <button type="button" class="cancelbtn" onclick="document.getElementById('sitemodal').style.display='none'" data-dismiss="modal">Cancel</button>
+      </div>
+      </form>
+    </div>
+  </div>

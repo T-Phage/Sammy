@@ -1,0 +1,51 @@
+    .assign-modal-dialog {
+        max-width: 820px;
+        margin: 1.75rem auto;
+        margin-top: 1.75rem;
+        margin-right: auto;
+        margin-bottom: 1.75rem;
+        margin-left: auto;
+        background: white;
+    }
+    .assign-modal-content {
+        background-color: #fefefe6b;
+        margin: 5% auto 5% auto;
+        border: 1px solid #888;
+        width: 820px;
+        height: 100%;
+        background: #88888821;
+    }
+    .assign-modal-body {
+        position: relative;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        padding: 1rem;
+        height: 100%;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .leftdiv{
+      position: relative;
+      margin-left:6%;
+      text-align:left;
+    }
+
+    .rightdiv{
+      position: relative;
+      text-align:left;
+      margin-left:5%;
+    }
+
+/****************************************
+Styling at media screen 450px  
+*****************************************/
+    @media screen and (max-width: 450px){
+      .assign-modal-dialog{
+          width:100%;
+        }
+      
+        .assign-modal-content {
+          width: auto;
+        }
+    }

@@ -1,0 +1,49 @@
+{% url 'siteapp:index' as index %}
+{% url 'siteapp:task' as task %}
+{% url 'sites' as sites %}
+{% url 'siteapp:repository' as repository %}
+{% url 'siteapp:taskpage' as taskpage %}
+<style> .active {background-color:white;} </style>
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <h5><span class="navbar-toggler-icon" style="height:30px;"><h5 style="margin-left: 50px;">Menu</h5></span></h5>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item {% if request.path == index %} active {% endif %}">
+              <a class="nav-link text-primary" href="{% url 'siteapp:index' %}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-primary" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Sites
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item fa fa-globe" href="" data-toggle="modal" data-target="#sitemodal"><r>Create site</r></a>
+                  <a class="dropdown-item fa fa-folder" href="{% url 'siteapp:repository' %}"><r>Repository</r></a>
+                  <a class="dropdown-item" href="{% url 'siteapp:sites' %}">My Site</a>
+                  <div class="dropdown-divider"></div>
+                    <a class="dropdown-item fa fa-tasks" href="{% url 'siteapp:task' %}"><r>My Task</r></a>
+                </div>
+            </li>
+            <li class="nav-item {% if request.path == task %} active {% endif %}">
+              <a class="nav-link text-primary" href="{% url 'siteapp:task' %}">Tasks</a>
+            </li>
+            <li class="nav-item {% if request.path == repository %} active {% endif %}">
+              <a class="nav-link text-primary" href="{% url 'siteapp:repository' %}">Repository</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-primary" href="{% url 'password_change' %}">Change Password</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle fa fa-user text-primary" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item fa fa-globe" href="{% url 'password_change' %}"><r>Change Password</r></a>
+                <a class="dropdown-item fa fa-user" href="#"><r>Profile</r></a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item fa fa-sign-out" href="{% url 'logout' %}"><r>Logout</r></a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>

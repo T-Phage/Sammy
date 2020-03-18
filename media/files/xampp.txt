@@ -1,0 +1,7 @@
+installing xamp
+
+chmod 755 xampp-linux-x64-7.3.9-0-installer.run
+
+ls -l xampp-linux-x64-7.3.9-0-installer.run
+
+sudo ./xampp-linux-x64-7.3.9-0-installer.run

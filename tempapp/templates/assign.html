@@ -1,0 +1,49 @@
+
+<!--Assignees modal -->
+      <div class="container">
+        <!-- The Modal -->
+        <div class="modal row" id="assignModal">
+          <div class="assign-modal-dialog col-sm-6">
+            <div class="assign-modal-content">
+
+              <!-- Modal Header -->
+              <div class="modal-header">
+                <button class="btn btn-primary" type="submit">Add</button>
+                <button class="btn btn-primary" type="button" onclick="document.getElementById('assignModal').style.display='none'">&times;</button>
+              </div>
+
+              <!-- Modal body -->
+              <div class="assign-modal-body" style="height:400px;">
+                <div class="row" style="height:100%;">
+                  <!-- Leftdiv card -->
+                  <div class="card leftdiv col-sm-5">
+                     <div class="" style="background: #88888829;height:15%;position:static;width:100%;margin-left:0px;">
+                        <form class="form-inline my-2 my-lg-0" style="padding-top:1%;width:100%;" >
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+                          </form>
+                     </div>
+                     <hr />
+                     <div class="card-body">
+
+                     </div>
+                  </div>
+
+                  <!-- Rightdiv card-->
+                  <div class="card rightdiv col-sm-5">
+                    <label>Select a file to upload...</label>
+                    <input type="file" name="fileUpload" onchange="setFileName(event.target.files[0].name)" />
+                  </div>
+                </div>
+              </div>
+
+
+              <!-- Modal footer -->
+              <div class="modal-footer">
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>

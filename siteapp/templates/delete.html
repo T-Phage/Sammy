@@ -1,0 +1,7 @@
+<p>Are you sure you want to delete "{{ file.filepath }} {{ site_folder.folder_name }}" ?</p>
+
+<a href="{% url 'siteapp:sites' %}">Cancel</a>
+<form method="POST" action="">
+	{% csrf_token %}
+	<input type="submit" name="Confirm">
+</form>
