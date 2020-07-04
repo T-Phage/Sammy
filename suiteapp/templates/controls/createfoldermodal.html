@@ -1,0 +1,37 @@
+<!-- Create folder Modal -->
+<style>
+  #id_folder_name{
+    width: 100%;
+  }
+
+</style>
+<div class="modal fade" id="folderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Enter the name of the folder</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="" method="POST">
+          {% csrf_token %}
+            <div class="">
+                {{ create_folder.folder_name }}
+                {{ create_folder.is_rep }}
+                {{ create_folder.created_by }}
+                {{ create_folder.faculty }}
+                {{ create_folder.department }}
+                {{ create_folder.main_folder }}
+            </div>
+<!--            <p id="dep">{{ request.path|slice:"17:19" }}</p>-->
+            
+             <!-- Modal footer -->
+            <div class="modal-footer">
+              <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Create folder</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>

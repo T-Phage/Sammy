@@ -1,0 +1,64 @@
+<script>
+  $(document).ready(function(){
+      $("#id_site_name").keyup(function(){
+      $('#id_site_id')[0].value=$('#id_site_name').val().toLowerCase();
+      // $('#id_site')[0].value=$('#id_site_name').val();
+      // Replace whitepsaces with "-"
+      var replaceSpace = $(this).val();
+      var result = replaceSpace.replace(/ /g, "-");
+      document.getElementById("id_site_id").value = result;
+      
+    });
+      
+  });
+</script>
+<style>
+   #id_site_id {
+    text-transform: lowercase;
+    background-color: white;
+  }
+   
+   #id_created_by {
+     display: block;
+   }
+   
+</style>
+  <!-- Modal -->
+   <div class="modal fade sitemodal align-items-center" id="sitemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+
+        <div class="modal-body">
+          <form class="modal-content animate" action="/save_siteform/" method="post" style="max-width: 340px;">
+            {% csrf_token %}
+          <div class="container" style="padding-top: 5%; padding-left:8%; padding-right: 8%;background-color:white;">
+                {{siteform}}<br />
+              {{siteuserform}}
+            <button type="submit" class="btn btn-primary">Create site</button>
+            <button type="button" class="btn btn-danger" onclick="document.getElementById('sitemodal').style.display='none'" data-dismiss="modal">Cancel</button>
+      </div>
+      </form>
+        </div>
+      </div>
+    </div>
+    <script>
+      // $("#id_site_name").on('change', function(){
+      //   var username = $('#id_site_id').val().toLowerCase();
+      // console.log(username)
+      //   $.ajax({
+      //       url: "{% url 'suiteapp:validate_site_name' %}",
+      //       type: 'get',
+      //       data: {
+      //         site_id: username,
+      //       },
+      //       dataType: 'json',
+      //       success: function(data){
+      //           if(data .is_taken){
+      //               alert('alredy exist');
+      //           }
+      //       }
+      //   });
+      // });
+    </script>
+  </div>
+  

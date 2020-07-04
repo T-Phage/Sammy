@@ -1,0 +1,263 @@
+{% extends 'base.html' %}
+{% block add_site_members %}
+<style>
+@media only screen and (max-width: 800px){
+  .container{
+      padding-top: 3%;
+  }
+}
+/* #selectedRole .row{
+  display: none;
+} */
+#selectedUser li:nth-of-type(1n+6) {
+  display: none;
+}
+
+</style>
+<div class="container" style="margin-top: 10%;">
+    <div class="row border" style="height:400px;">
+        <!-- Vertical lines -->
+        <div class="vl"></div>
+        <!-- First column -->
+      <div class="vc col-lg">
+        <form class="form-inline navbar-light bg-light">
+            <div class="input-group">
+                {{ filter.form.firstname }}
+             <!-- <input id="id_firstname" type="search" class="form-control" placeholder="search" aria-label="Search"> -->
+            </div>
+        </form>
+        <hr />
+        <p>
+          <ul type="none" id="filter-list" class="list-group" style="display: none">
+            {% for user in filter.qs %}
+              <li class="row list-group-item list-group-item-light list-group-item-action user-list" name="{{user.username}}">
+                <span class="">{{ user.get_full_name }}</span>
+                <span style="cursor: pointer; color: blue;"><a title="Add This user">+</a> </span> <!-- onclick="addUser('{{user}}','{{user.get_full_name }}')" -->
+              </li>
+            {% endfor %}
+          </ul>
+        </p>
+      </div>
+      <!-- Vertical lines -->
+      <div class="vl border-left"></div>
+        <!-- Second column -->
+      <div class="vc col-lg">
+        <h5 style="padding-top: 13px;font-weight: lighter;">Selected Users</h5>
+        <hr />
+<!--        <div id="selectedUser"></div>-->
+        <ul type="none" id="selectedUser" class="list-group">
+
+        </ul>
+      </div>
+      <!-- Vertical lines -->
+      <div class="vl border-left"></div>
+        <!-- THird column-->
+      <div class="vc col-lg">
+        <h5 style="padding-top: 13px;font-weight: lighter;">Select role</h5>
+        <hr />
+        <ul type="none" id="selectedRole" class="list-group">
+           
+        </ul>
+      </div>
+      <!-- Vertical lines -->
+      <div class="vl border-left"></div>
+      <!-- Fourth column -->
+      <div class="vc col-lg">
+        <h5><button type="submit" class="btn btn-outline-primary my-2 my-sm-0 input-group-text">Add users</button></h5>
+        <hr />
+        <p>Lorem ipsum dolor..</p>
+      </div>
+    </div>
+  </div>
+
+<form method="POST" action="">
+{% csrf_token %} 
+  <ul type="none" id="form-list">
+    {% for form in formset %}
+    <li>{{form}}</li>
+    {% endfor %}
+  </ul>
+    {{formset.management_form}}
+  <input type="submit" value="Save">
+</form>
+
+<script>
+
+    var arr = []
+    var role = []
+    var extra = 0;
+    
+    var x = $('#form-list li:last-child').index();
+    var x = x+1
+ 
+    for(var n=1; n<=x; n++){
+      for (var f=0;f<x; f++){
+        var sel = $('#form-list li:nth-child('+ n +') select[name=form-'+ f +'-site]');
+        if($('#form-list li:nth-child('+ n +') select[name=form-'+ f +'-site] option:selected').val() == 0){
+          for(var i=0; i<sel[0].options.length; i++){
+            if(sel[0].options[i].label === "{{site}}"){
+              sel[0].selectedIndex = i;
+            }
+          }
+        }
+      }
+    }
+
+    $(document).ready(function(){
+      
+      $('#id_firstname').on('keyup', function(){
+        $('#filter-list').toggle()
+        var value = $(this).val().toLowerCase();
+        $('#filter-list .user-list').filter(function(){
+          $(this).toggle($(this)[0].childNodes[1].childNodes[0].data.toLowerCase().indexOf(value) > -1)
+        });
+      });
+
+        var csrf = document.getElementsByName('csrfmiddlewaretoken')[0].value;
+
+            $("#filter-list").on('click', 'li', function(){
+            $(this).remove()
+            $.ajax({
+                url: "{% url 'suiteapp:add_site_member_ajax' %}",
+                type: 'get',
+                data: {
+                    text: $(this).text(),
+                    username: $(this).attr('name'),
+                },
+                dataType: "json",
+                success: function(response){
+                
+                    username = response.username;
+                    res = response.text;
+                    res = res.toString();
+                    result = res.replace("+", " ")
+                    
+                    if(window.arr.length < x){
+                      if(window.arr.find(e => e === username) === undefined){
+                          window.arr.push(username);
+                          $("#selectedUser").append('<li id="list" name="' + username + '" class="form-group"><span class="form-control">' + result +  '<a style="cursor: pointer; color: blue;" title="remove this user">-</a></span></li>')
+                          $("#selectedRole").append('<li class="form-group" name="' + username + '"><select id="role" class="form-control"><option>-------</option><option>manager</option><option>collaborator</option><option>contributor</option><option>consumer</option></select></li>')
+
+                          for(var n=1; n<=x; n++){
+                            for (var f=0;f<x; f++){
+                              var sel = $('#form-list li:nth-child('+ n +') select[name=form-'+ f +'-user]');
+                              if($('#form-list li:nth-child('+ n +') select[name=form-'+ f +'-user] option:selected').val() == 0){
+                                for(var i=0; i<sel[0].options.length; i++){
+                                  if(sel[0].options[i].label === username){
+                                    sel[0].selectedIndex = i;
+                                    sel.parent().attr('name', username);
+                                    sel.attr('filled', 'true');
+                                  }
+                                }
+                                return;
+                              }
+                            }
+                          } 
+                      }
+                      
+                      else
+                          alert("Already Selected");
+                    }
+
+                }
+            });
+        });
+
+        $("#selectedUser").on('click', 'li', function(){
+          $(this).remove();
+
+            $.ajax({
+                url: "{% url 'suiteapp:add_site_member_ajax' %}",
+                type: 'get',
+                data: {
+                    user: $(this).text(),
+                    name: $(this).attr('name'),
+                },
+                dataType: "json",
+                success: function(response){
+
+                    users = response.user;
+                    name = response.name;
+
+                    arry = window.arr;
+                    
+                    function removeElement(array, elem) {
+                        var index = array.indexOf(elem);
+                        if (index > -1) {
+                          array.splice(index, 1);
+                        }
+                    }
+                    removeElement(arry, name);
+                    // console.log(arry);
+
+                    var ul = document.getElementById("selectedRole");
+                    var items = ul.getElementsByTagName("li");
+                    for (var i = 0; i < items.length; ++i) {
+                      var el = items[i].getAttribute("name")
+                      if(name.match(el)){
+                        $("#selectedRole li[name=" + el + "]").remove();
+                        $("#form-list li[name="+ el + "] select[filled=true]")[0].selectedIndex = 0;
+                        $("#form-list li[name="+ el + "] select")[2].selectedIndex = 0;
+                        // $("#form-list li[name="+ el + "]").attr('name', ' ');
+                      }
+                      
+                    }                    
+                }
+            });
+        });
+                                                                            
+        $("#selectedRole").on('change', 'li select', function(){
+          
+          $.ajax({
+            url: "{% url 'suiteapp:add_site_member_ajax' %}",
+            type: 'get',
+            data: {
+                  role: $(this).val(),
+                  ruser: $(this).parent().attr('name'),
+                },
+            dataType: "json",
+            success: function(response){
+             var ruser = response.ruser
+             var role = response.role
+              
+              for(var n=2; n<=x; n++){
+                
+                if($('#form-list li:nth-child('+ n +')').attr('name') == ruser){
+                  
+                  var sel = $('#form-list li:nth-child('+ n +') select')[2];
+                  for(var i=0; i<sel.options.length; i++){
+                    if(sel.options[i].label === role){
+                      sel.selectedIndex = i;
+                    }
+                  }
+                  return;
+                }
+              }
+                            
+            }
+          });
+        });
+        
+        
+        // $("#id_site_name").on('change', function(){
+        // var username = $('#id_site_id').val();
+      //   $.ajax({
+      //       url: "{% url 'suiteapp:validate_site_name' %}",
+      //       type: 'get',
+      //       data: {
+      //         site_id: $(this).val(),
+      //       },
+      //       dataType: 'json',
+      //       success: function(data){
+      //           if(data .is_taken){
+      //               alert('alredy exist');
+      //           }
+      //       }
+      //   });
+      // });
+      
+    });
+</script>
+{% endblock %}
+
+

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{% url 'index' as index %}
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login Page</title>
+
+    <!-- Load an icon library to show a hamburger menu (bars) on small screens -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{% static 'css/min.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/responsiveness.css' %}" />
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+   
+</head>
+<body class="login-body">
+
+    <div class="form" style="height: 100%;">
+        <div class="container-fluid">
+            <div class="">
+                <h1 style="color: blanchedalmond;">Work Better, Together</h1>
+                <p style="color: blanchedalmond; font: 18px;">The easiest way to get your work done.
+                Share tasks, projects and files with anyone you work with.</p>
+                {% for message in messages %}
+                    <p style="color:red;"><b>{{ message }}</b></p>
+                {% endfor %}
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="uname" class="card-head">Username :</label> <br />
+                        <input type="text" class="form-control" name="username" id="uname" placeholder="username"> <br />
+                        <label for="pword">Password</label> <br />
+                        <input type="password" class="form-control" name="password" id="pword" placeholder="password"> <br />
+                        <input type="submit" class="btn btn-light" value="Sign in">
+                    </div>
+                </form>
+                <span>Forget password?</span><a href="{% url 'reset_password' %}" style="color:#4e33b7; text-decoration:underline;"> Reset Password</a>
+<!--                 <br />or-->
+<!--                <p>click<a href="{% url 'register' %}" style="color:white;">create an account</a></p>-->
+            </div>
+        </div>
+    </div>
+</body>
+</html>

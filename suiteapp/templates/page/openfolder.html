@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% block openfolder %}
+{% load static %}
+{% url 'suiteapp:open_department' user.department.dept_id as open_department %}
+{% url 'suiteapp:open_faculty' user.department.faculty.faculty_id as open_faculty %}
+{% url 'suiteapp:mysite' as mysite %}
+
+<!-- uploadmodal -->
+{% include 'controls/uploadmodal.html' %}
+
+<!-- Createfoldermodal -->
+{% include 'controls/createfoldermodal.html' %}
+
+<!--body tab-->
+<div class="container" style="margin-left: 15%">
+    <br />
+    <br />
+    <br />
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link fas fa-folder" data-toggle="modal" data-target="#folderModal" href="#"><r>Create folder</r></a>
+      </li>
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><r>Upload file</r></a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item fas fa-folder" data-toggle="modal" data-target="#myModal" href="#" onclick="upFunction()"><r>Directory</r></a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item fas fa-file-text blue" href="https://docs.google.com/document/u/0/"><r>google docs</r></a>
+            <a class="dropdown-item fas fa-file-excel-o blue" href="https://docs.google.com/spreadsheets/u/0/"><r>google spreadsheet</r></a>
+            <a class="dropdown-item fas fa-file-powerpoint-o blue" href="#"><r>google presentation</r></a>
+          </div>
+        </li>
+    </ul>
+</div>
+
+<div class="sidenav" style="margin-top:10%;">
+    <h4 style="font-size:18px"></h4>
+  <div class="card" style="width:80%; border:0px;">
+      <div class="card-body" style="padding-top:0%;">
+        <a href="">Add members</a>
+        <a href="">Site members</a>
+        <a href="">Chats</a>
+      </div>
+  </div>
+</div>
+
+
+<div class="main col-sm-9">
+    <div class="container">
+<!-- list of files  on department-->
+        {% if request.path == open_department %}
+            {% for file in files %}
+                {% if file.department == user.department %}
+                    <div class="row border" id="files" style="border:1px groove gray; width:100%; height:150px;">
+                        <div class="row col-9">
+                            <span class="image col-sm-2" id="id_doc" style="padding-top:20px;">
+                                <a href="{{ file.filepath.url }}"><img class="img_doc" src="{% static ''%}" width="70px" height="70px" alt="icon"></a>
+                            </span>
+
+                            <span class="filename col-sm-6" id="file_name" style="padding-top:8%;">
+                                <h6 style="padding-left:0;"><a href="{% url 'suiteapp:open_file' file.file_id %}" id="filename"> {{ file.filepath|cut:"files/" }}</a></h6>
+                            </span>
+                        </div>
+                        <span class="col-3" style="padding-top:5%;">
+                            <ul type="none" style="font-size:12px;">
+                                <li><a href="{% url 'suiteapp:deletefile' file.file_id %}">Delete</a></li>
+                                <li><a href="">Permissions</a></li>
+                                <li><a id="downloadfile" href="{{ file.filepath.url }}" download="{{ file.filepath.url }}">Download</a></li>
+                            </ul>
+                        </span>
+                    </div>
+                    <br />
+                {% endif %}
+            {% endfor %}
+
+
+        <!-- list of files on faculty -->
+        {% elif request.path == open_faculty %}
+            {% for file in files %}
+                {% if file.faculty == user.department.faculty %}
+                    <div class="row border" id="files" style="border:1px groove gray; width:100%; height:150px;">
+                        <div class="row col-9">
+                            <span class="image col-sm-2" id="id_doc" style="padding-top:20px;">
+                                <a href="{{ file.filepath.url }}"><img class="img_doc" src="{% static ''%}" width="70px" height="70px" alt="icon"></a>
+                            </span>
+
+                            <span class="filename col-sm-6" id="file_name" style="padding-top:8%;">
+                                <h6 style="padding-left:0;"><a href="{% url 'suiteapp:open_file' file.file_id %}" id="filename"> {{ file.filepath|cut:"files/" }}</a></h6>
+                            </span>
+                        </div>
+                        <span class="col-3" style="padding-top:5%;">
+                            <ul type="none" style="font-size:12px;">
+                                <li><a href="{% url 'suiteapp:deletefile' file.file_id %}">Delete</a></li>
+                                <li><a href="">Permissions</a></li>
+                                <li><a id="downloadfile" href="{{ file.filepath.url }}" download="{{ file.filepath.url }}">Download</a></li>
+                            </ul>
+                        </span>
+                    </div>
+                    <br />
+                {% endif %}
+            {% endfor %}
+
+        <!-- Mysite -->
+        <!-- Mysite files -->
+        {% elif request.path == mysite %}
+            {% for file in files %}
+                {% if file.uploaded_by == user %}
+                    {% if file.department is blank %}
+                        {% if file.faculty is blank %}
+                            <div class="row border" id="files" style="border:1px groove gray; width:100%; height:150px;">
+                                <div class="row col-9">
+                                    <span class="image col-sm-2" id="id_doc" style="padding-top:20px;">
+                                       <a href="{{ file.filepath.url }}"><img class="img_doc" src="{% static ''%}" width="70px" height="70px" alt="icon"></a>
+                                    </span>
+
+                                    <span class="filename col-sm-6" id="file_name" style="padding-top:8%;">
+                                        <h6 style="padding-left:0;"><a href="{% url 'suiteapp:open_file' file.file_id %}" id="filename"> {{ file.filepath|cut:"files/" }}</a></h6>
+                                    </span>
+                                </div>
+                                <span class="col-3" style="padding-top:5%;">
+                                    <ul type="none" style="font-size:12px;">
+                                       <li><a href="{% url 'suiteapp:deletefile' file.file_id %}">Delete</a></li>
+                                       <li><a href="">Permissions</a></li>
+                                       <li><a id="downloadfile" href="{{ file.filepath.url }}" download="{{ file.filepath.url }}">Download</a></li>
+                                    </ul>
+                                </span>
+                            </div>
+                            <br />
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+            <!-- folders in mysite -->
+            {% for folder in folders %}
+                <div class="row border" style="width:100%; height:150px;">
+                    <div class="row col-9">
+                        <div class="col-sm-2" style="padding-top:5%; height:100%;">
+                           <img src="{% static 'images/folder.jpeg' %}" width="50px" height="50px" style="padding-top:4%;" alt="">
+                        </div>
+                        <div class="col-sm-6">
+                            <h5 style="padding-top:10%; margin-left:0px; width:100%;">{{ folder.folder_name }}</h5>
+                        </div>
+                    </div>
+                    <div class="col-3" style="padding-top:5%;">
+                        <ul type="none" style="font-size:12px;">
+                           <li><a href="">Delete</a></li>
+                           <li><a href="">Permissions</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <br >
+            {% endfor %}
+
+        {% endif %}
+
+    </div>
+</div>
+
+<h1 id="path" style="display:none;">{{ request.path }}</h1>
+
+
+
+{% endblock %}
+<script type="text/javascript">
+    // document.getElementById('downloadfile').href = window.location.toString();
+    
+</script>

@@ -1,0 +1,315 @@
+{% extends 'base.html' %}
+{% block taskpage %}
+
+<style>
+  .collapse #assignee-search{
+    max-height: 200px;
+    /* display: none; */
+    overflow: hidden;
+  }
+  #assignees-list{
+    max-height: 200px;
+    overflow: scroll;
+  }
+  /* #fileform{
+    height: px;
+  } */
+  @media screen and (max-width: 450){
+    #task-form{
+      width: 100%;
+    }
+  }
+</style>
+ <!--body tab-->
+ <div class="container">
+    <br />
+    <br />
+    <br />
+    <div class="form-group" id="task-form">
+        <!-- <form action="" method="POST" enctype="multipart/form-data"> -->
+           {% csrf_token %}
+          <!--General info about task-->
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label" for="priority">Priority:</label>
+               <!-- {{ taskdetail.priority }} -->
+                <select class="col-sm-2 col-md-2" id="priority" required>
+                  <option>------</option>
+                  <option>High</option>
+                  <option>Medium</option>
+                  <option>Low</option>
+                </select>
+            </div><br />
+            <div class="form-group row">
+              <label for="id_due_date" class="col-sm-2 col-form-label">Due Date:</label>
+              <!-- {{ taskdetail.due_date }} -->
+              <input class="col-sm-2 col-md-2" type="date" id="date">
+            </div><br />
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label" for="id_due_time">Due Time:</label>
+              <!-- {{ taskdetail.due_time }} -->
+              <input class="col-sm-2" type="time" id="time">
+            </div>
+            <hr />
+            <!--File canvas-->
+            <div id='fileform'>
+              <!-- <div class="admonition col-sm-4">
+                  
+              </div><br /> -->
+              <ul>
+                {% for form in fileformSet %}
+                <li>{{form}}</li>
+                {% endfor %}
+              </ul>
+              <!-- <form method="POST" enctype="multipart/form-data">{% csrf_token %} {{ form.filepath }} {{ form.is_task }} {{ form.uploaded_by }} -->
+                <!-- <input type="submit"></form> -->
+            <!-- {{form}} -->
+              <input class="btn btn-outline-secondary" type="button" value="Select files">
+            
+            </div>
+            <hr />
+            <!--Assignee field-->
+            <div>
+              <ul type="none" class="card card-body col-sm-4 col-md-4" id="assignees-list">
+                
+              </ul>
+              <p>
+                <button class="btn btn-primary" id="btn-collapse" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                  Click to add assignees
+                </button>
+              </p>
+              
+              <div class="collapse" id="collapseExample" style="width: 400px;">
+                <div class="card card-body">
+                    {{ filter.form.firstname }}
+                    
+                  <ul id="assignee-search" style="display: none">
+                    {% for user in filter.qs %}
+                      <li class="row list-group-item list-group-item-light list-group-item-action assignee" name="{{user.username}}">
+                        <span class="">{{ user.get_full_name }}</span>
+                        <span style="cursor: pointer; color: blue;"><a title="Add This user">+</a> </span> <!--onclick="addUser('{{user}}','{{user.get_full_name }}')"-->
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- <input class="btn btn-outline-primary" type="button" value="Click to add assignee" onclick="document.getElementById('assignModal').style.display='block'"> -->
+            
+            <hr />
+            <label for="id_comment">Comment</label> <br />
+            <!-- {{ taskdetail.comment }}  -->
+            
+            <textarea name="comment" id="comment" cols="50" rows="6" style="margin-top: 0px; margin-bottom: 0px; height: 195px;"></textarea>
+            <hr />
+            <!--Submit button to save button-->
+            <input class="btn btn-primary" type="" value="Send Task" id="submit-task">
+        <!-- </form> -->
+    </div>
+    
+    <form action="" method="POST">
+      {% csrf_token %}
+      <ul type="" id="details-list">
+        {% for form in formset %}
+        <li>{{form}}</li>
+        {% endfor %}
+      </ul>
+      {{formset.management_form}}
+      <input type="submit" value="Send">
+    </form>
+</div>
+
+<script>
+
+/*==================Task_name Fields========================*/
+var ffl =  $('#fileform ul li:last-child').index()
+var ffl = ffl+1
+for(var x=0;x<ffl;x++){
+  $('#id_form-'+x+'-filepath').on('change', function(){
+    var path = $(this)[0].value;
+    $(this).parent().attr('path', path)
+    console.log(path)
+  });
+}
+
+for(var x=1;x<=ffl;x++){
+  var sel = $('#fileform ul li:nth-child('+x+') select')[0]
+  for(var i=0; i<sel.options.length; i++){
+    if(sel.options[i].label === "{{name}}"){
+      sel.selectedIndex = i;
+    }
+  }
+}
+/*===================End of Task_name fields====================*/
+$('#fileform ul li input[type=file]').each(function(){
+  console.log($(this))
+});
+$('#fileform ul li').each(function(){
+  console.log($(this).attr('path'))
+});
+/*=========================Submit button=======================*/
+$('#submit-task').on('click', function(){
+  $('#details-list li').each(function(){
+    var x = $(this);
+    if(x.attr('name') == undefined){
+      if(x[0].childNodes[1].options.selectedIndex != 0){ 
+        x[0].childNodes[1].options.selectedIndex = 0  // task
+        x[0].childNodes[4].options.selectedIndex = 0  // priiority
+        x[0].childNodes[13].options.selectedIndex = 0 // assignee 
+        x[0].childNodes[16].options.selectedIndex = 0 // faculty 
+        x[0].childNodes[19].options.selectedIndex = 0 // deppartment 
+        x[0].childNodes[22].value = null // comment 
+        x[0].childNodes[7].value = null  // due time
+        x[0].childNodes[10].value = null // due date
+      }
+    }
+  });
+});
+/*=========================End of submit button====================*/
+
+/*=======================live seatch===========================*/
+  $("#assignees-list").css('display','none')
+ $('#id_firstname').on('keyup', function(){
+  $('#assignee-search').toggle()
+   var value = $(this).val().toLowerCase();
+   $('#assignee-search .assignee').filter(function(){
+     $(this).toggle($(this)[0].childNodes[1].childNodes[0].data.toLowerCase().indexOf(value) > -1)
+   });
+ });
+
+/*==============special variables=============================*/
+var x = $('#details-list li:last-child').index();
+var x = x+1
+var arr = []
+
+var path = "{{request.path}}";
+var path = path.toString();
+/*===============Departmemt and faculty varaibles===============================*/
+var faculty = new RegExp("Faculty");
+var dept = new RegExp("Department");
+var self = new RegExp("yourself")
+/*======================Assign task to self========================*/
+if(self.test(path)){
+  $('#btn-collapse').hide()
+}
+
+// console.log($('#details-list li:nth-child(1) select')[2].selectedIndex)
+// console.log($('#details-list li:nth-child(1) select'))
+/*====================Faculty Field===================*/
+if(faculty.test(path)){
+  for(var n=1; n<=x; n++){
+    var sel = $('#details-list li:nth-child('+ n +') select')[3];
+    
+      for(var i=0; i<sel.options.length; i++){
+        if(sel.options[i].label === "{{request.user.department.faculty}}"){
+          sel.selectedIndex = i;
+        }
+      }
+  } 
+}
+/*========================End of Faculty Field======================*/
+
+/*=======================Department Field=======================*/
+else if(dept.test(path)){ 
+  
+  for(var n=1; n<=x; n++){
+    var sel = $('#details-list li:nth-child('+ n +') select')[4];
+    
+    for(var i=0; i<sel.options.length; i++){
+      if(sel.options[i].label === "{{request.user.department}}"){
+        sel.selectedIndex = i;
+      }
+    }
+  } 
+}
+  /*=================End of Department Field==================*/
+
+/*====================End of Departmemt and faculty fields=============================*/
+
+  for (var f=0;f<x; f++){
+    var sel = $('#details-list select[name=form-'+ f +'-task]')[0];
+    sel.value = "{{name}}";
+  }
+  
+  /*=================CommentField=========================*/
+  $("#comment").keyup(function(){
+    for (var f=0;f<x; f++){
+      $('#id_form-'+ f +'-comment')[0].value=$('#comment').val();
+    }
+  });
+   /*==============End CommentField======================*/
+  
+   /*=================DateField=========================*/
+  $("#date").change(function(){
+    for (var f=0;f<x; f++){
+      $("#id_form-"+ f +"-due_date")[0].value=$(this).val();
+    }
+  });
+  /*====================End DateField=======================*/
+  
+  /*=====================TimeField=========================*/
+  $("#time").change(function(){
+    for (var f=0;f<x; f++){
+      $("#id_form-"+ f +"-due_time")[0].value=$(this).val();
+    }
+  });
+  /*=================End TimeField======================*/
+  
+  /*=================Priority Field======================*/
+  $("#priority").change(function(){
+    var p = $(this).val();
+    
+    for(var n=1; n<=x; n++){
+      var sel = $('#details-list li:nth-child('+n+') select')[1];
+      var sel1 = $('#details-list li:nth-child('+n+') select')[2];
+      // if (sel1.selectedIndex != 0){
+        for(var i=0; i<sel.options.length; i++){
+          if(sel.options[i].label === p){
+            sel.selectedIndex = i;
+          // }
+        }
+      }
+    }
+  });
+  /*=================End Priority Field======================*/
+    
+  /*==================Add to Assignee Field=========================*/
+  
+  $('#assignee-search .assignee').on('click', function(){
+    $("#assignees-list").css('display','block')
+    var username = $(this).attr('name')
+    var name = $(this)[0].childNodes[1].childNodes[0].data
+    if(arr.length < x){
+      if(arr.find(e => e === username) === undefined){
+        arr.push(username)
+        $(this).remove();
+        $('#assignees-list').append('<li name="' + username + '" class="row list-group-item list-group-item-light list-group-item-action">' + name +  '<a style="cursor: pointer; color: blue;" title="remove this user">  -</a></li>')
+
+        for(var n=1; n<=x; n++){
+          var sel2 = $('#details-list li:nth-child('+ n +') select')[2];
+          var sel3 = $('#details-list li:nth-child('+ n +') select')[3]
+          if($('#details-list li:nth-child('+ n +') select')[2].options.selectedIndex == 0){
+           
+            for(var i=0; i<sel2.options.length; i++){
+              if(sel2.options[i].label === username){
+                sel2.selectedIndex = i;
+                $('#details-list li:nth-child('+ n +')').attr('name', username);
+              }
+            }
+            return;
+          }
+        }
+      }
+    }
+  });
+ /*==================End of Add to Assignee Field=========================*/
+ 
+  /*===================Remove from assignee====================*/
+  $('#assignees-list li').on('click', function(){
+    // $(this).appendTo()
+  });
+  
+</script>
+
+{% endblock %}
+
+<!-- nodeType -->

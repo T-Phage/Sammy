@@ -1,0 +1,68 @@
+{% load static %}
+<!--File upload modal-->
+<div class="container">
+  <!-- The Modal -->
+  <div class="modal uploadmodal" id="myModal">
+    <div class="modal-dialog">
+
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">File upload</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-1">
+                <img id="aud" src="{% static 'images/fileicons/audioicon.jpeg' %}" height="50" width="50" alt="icon" style="display:none;">
+                <img id="def" src="{% static 'images/fileicons/deficon.png' %}" height="50" width="50" alt="icon" style="display:none;">
+                <img id="docs" src="{% static 'images/fileicons/docs.png' %}" height="50" width="50" alt="icon" style="display:none;">
+                <img id="html" src="{% static 'images/fileicons/htmlicon.png' %}" height="50" width="50" alt="icon" style="display:none;">
+                <img id="img" src="{% static 'images/fileicons/imageicon.png' %}" height="50" width="50" alt="icon" style="display:none;">
+                <img id="pdf" src="{% static 'images/fileicons/pdficon.png' %}" height="50" width="50" alt="icon" style="display:none;">
+                <img id="pow" src="{% static 'images/fileicons/powicon.jpeg' %}" height="50" width="50" alt="icon" style="display:none;">
+            </div>
+            <div class="col" style="padding-top: 13px;">
+                <h6 id="file" name="file"></h6>
+            </div>
+          </div>
+          <div style="text-align: center; border: 1px dashed rgb(9, 216, 147);">
+            <label for="id_filepath">Click to select a file to upload...</label>
+              {{ form.filepath }}
+              {{ form.uploaded_by }}
+              {{ form.department }}
+              {{ form.faculty }}
+              {{ form.is_rep }}
+              {{ form.folder }}
+              <script type="text/javascript">
+              </script>
+          </div>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" style="width:100%;color:white;">
+            <i class="fas fa-upload" style="color: white;"></i>Upload</button>
+        </div>
+
+      </div>
+        </form>
+    </div>
+  </div>
+
+</div>
+<script type="text/javascript">
+document.getElementById('id_filepath').addEventListener("change", function(){setFileName(event.target.files[0].name)});
+
+  // document.getElementById('id_department').style.display='none';
+  // document.getElementById('id_is_rep').style.display='none';
+  // function upFunction(){
+  //   document.getElementById('id_department').value =  sessionStorage.getItem('dept_id')
+  //   document.getElementById('id_faculty').value =  sessionStorage.getItem('faculty')
+  // }
+</script>
+

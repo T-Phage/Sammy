@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{formset.management_form}}
+        <ul>
+        {% for form in formset %}
+            <li>{{form}}</li>
+        {% endfor %}
+        </ul>
+        <input type="submit"> 
+    </form>
+    
+    <script>
+    for(var n=2; n<=5; n++){
+        for(var f=1; f<5; f++){
+            console.log(f);
+        }
+    }
+    var x = 0;
+        console.log($('#form-'+ (x-1) +'-role'));
+        
+        console.log($('form li:last-child').index());
+        for(var i=1; i<=5-1; i++){
+            console.log(i);
+        }
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block task %}
+
+<style>
+  #hide{
+    display: none;
+  }
+</style>
+    <!--body tab-->
+    <div class="container">
+        <br />
+        <br />
+        <br>
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#home">Assign Task </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#mytasks">My Tasks</a>
+          </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div id="home" class="container tab-pane active"><br>
+            <br />
+            <br />
+            <br />
+            <div class="form-group">
+              <form action="" method="POST">
+                {% csrf_token %}
+                <div class="form-group col-md-4">
+                  <div class="nav-item dropdown" style="border-style:dotted; border-width: 0.4px;">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Select Task...</a>
+                    <div class="dropdown-menu" id="link-list" style="width: 100%;">
+                      <button type="submit" class="dropdown-item" >Assign to yourself<br /><sup>Assign a task to your own self</sup></button>
+                      <button type="submit" class="dropdown-item">Assign to an individual<br /><sup>Assign a task to a single person</sup></button>
+                      <button type="submit" class="dropdown-item" >Assign to Department<br /><sup>Assign a task to a particular group of people</sup></button>
+                      <button type="submit" class="dropdown-item">Assign to Faculty<br /><sup>Assign a task to people in your department</sup></button>
+                    </div>
+                  </div>
+                </div>
+                  <li id="">{{taskform}}</li>
+                </form>
+                  
+            </div>
+          </div>
+          <div id="mytasks" class="container tab-pane fade"><br>
+              <h3>No task has been assigned to you yet</h3>
+              <p>you can assign task</p>
+          </div>
+        </div>
+    </div>
+    
+    <script>
+      
+      var today = new Date();
+      
+      $('div #link-list button:nth-child(1)').click(function(){
+        var ind = $('div #link-list button:nth-child(1)')[0]['childNodes'][0].textContent;
+        var ind = ind.substring(10, 18)
+        
+        var replaceSpace = '{{request.user}}'+ today + ind;
+        var result = replaceSpace.replace(/ /g, "");
+        $('#id_task_name')[0].value = result;
+      });
+      
+      $('div #link-list button:nth-child(2)').click(function(){
+        var ind = $('div #link-list button:nth-child(2)')[0]['childNodes'][0].textContent;
+        var ind = ind.substring(13, 23)
+        
+        var replaceSpace = '{{request.user}}'+ today + ind;
+        var result = replaceSpace.replace(/ /g, "");
+        $('#id_task_name')[0].value = result;
+      });
+      
+      $('div #link-list button:nth-child(3)').click(function(){
+        var dept = $('div #link-list button:nth-child(3)')[0]['childNodes'][0].textContent;
+        var dept = dept.substring(10, 20);
+        
+        var replaceSpace = '{{request.user}}'+ today + dept;
+        var result = replaceSpace.replace(/ /g, "");
+        $('#id_task_name')[0].value = result;
+      });
+      
+      $('div #link-list button:nth-child(4)').click(function(){
+        var fac = $('div #link-list button:nth-child(4)')[0]['childNodes'][0].textContent;
+        var fac = fac.substring(10, 17)
+        
+        var replaceSpace = '{{request.user}}'+ today + fac;
+        var result = replaceSpace.replace(/ /g, "");
+        $('#id_task_name')[0].value = result;
+      });      
+      
+    </script>
+
+{% endblock %}

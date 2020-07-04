@@ -1,0 +1,32 @@
+<link rel="stylesheet" type="text/css" href="/static/admin/css/base.css">
+<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<link rel="stylesheet" type="text/css" href="/static/admin/css/responsive.css">
+
+<meta name="robots" content="NONE,NOARCHIVE">
+
+<div class="breadcrumbs">
+	<a href="">Delete File</a>
+	&rsaquo;Files deleted can't be restored
+</div>
+
+<p>Are you sure you want to delete "{{ file.filepath }} {{ folder.folder_name }}" ?</p>
+
+{% if file.department == user.department or folder.department == user.department %}
+	<a href="{% url 'suiteapp:open_department' user.department.dept_id %}">Cancel</a>
+{% elif file.faculty == user.department.faculty or folder.faculty == user.department.faculty %}
+	<a href="{% url 'suiteapp:open_faculty' user.department.faculty.faculty_id %}">Cancel</a>
+{% elif file.is_rep is True or folder.is_rep is True %}
+	<a href="{% url 'suiteapp:repository' %}">Cancel</a>
+{% elif file.folder is not None %}
+<a href="{% url 'suiteapp:open_folder' file.folder.folder_id %}">Cancel</a>
+{% elif folder.main_folder is not None %}
+	<a href="{% url 'suiteapp:open_folder' folder.main_folder.folder_id %}">Cancel</a>
+{% elif file.department is blank and file.faculty is blank and file.folder is blank %}
+	<a href="{% url 'suiteapp:mysite' %}">Cancel</a>
+{% elif folder.department is blank and folder.faculty is blank and folder.main_folder is blank %}
+	<a href="{% url 'suiteapp:mysite' %}">Cancel</a>
+{% endif %}
+<form method="POST" action="">
+	{% csrf_token %}
+	<input type="submit" name="Confirm" value="Confirm">
+</form>
